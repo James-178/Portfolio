@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Neale | Software Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <style>
+        :root {
+            --deep-space: #012a4a;
+            --quantum-blue: #2a6f97;
+            --cyber-teal: #61a5c2;
+            --neon-wave: #89c2d9;
+            --hologram: #a9d6e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            color: var(--hologram);
+            overflow-x: hidden;
+            background: transparent;
+            /* Remove solid background */
+            position: relative;
+            /* Establish stacking context */
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--deep-space);
+            z-index: -3;
+            /* Behind other elements */
+        }
+
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Cybernetic Background */
+        .cyber-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 50% 50%,
+                    rgba(168, 216, 229, 0.15) 1px,
+                    /* Brighter dots */
+                    transparent 2px
+                    /* Larger spacing */
+                ),
+                linear-gradient(45deg, transparent 85%, rgba(168, 216, 229, 0.1) 95%),
+                linear-gradient(-45deg, transparent 85%, rgba(168, 216, 229, 0.1) 95%);
+            background-size:
+                60px 60px,
+                /* Larger grid spacing */
+                20px 20px,
+                20px 20px;
+            pointer-events: none;
+        }
+
+
+
+        .floating-chip {
+            position: absolute;
+            z-index: -1;
+            background: rgba(168, 216, 229, 0.09);
+            border-radius: 8px;
+            animation: glitch 10s infinite;
+            transition: all 0.3s ease;
+        }
+
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0, 0) skew(0deg);
+                opacity: 0.6;
+            }
+
+            20% {
+                transform: translate(-3px, 5px) skew(2deg);
+                opacity: 0.8;
+            }
+
+            40% {
+                transform: translate(5px, -3px) skew(-2deg);
+                opacity: 0.7;
+            }
+
+            60% {
+                transform: translate(-5px, 2px) skew(1deg);
+                opacity: 0.9;
+            }
+
+            80% {
+                transform: translate(2px, -5px) skew(2deg);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate(0, 0) skew(0deg);
+                opacity: 0.6;
+            }
+        }
+
+        section {
+            padding-top: 3%;
+            padding-left: 2%;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Terminal-inspired Header */
+        .console-header {
+            border-left: 3px solid var(--neon-wave);
+            padding-left: 3rem;
+            /* margin: 5rem 0; */
+            position: relative;
+        }
+
+        .console-header::before {
+            content: ">";
+            position: absolute;
+            left: -1.2rem;
+            color: var(--neon-wave);
+            animation: blink 1s infinite;
+        }
+
+        /* Holographic Card */
+        .holo-card {
+            background: rgba(168, 216, 229, 0.08);
+            border: 1px solid rgba(168, 216, 229, 0.2);
+            position: relative;
+            padding-left: 0.5rem;
+            transition: 0.3s;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .holo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(27, 219, 171, 0.464);
+        }
+
+        .holo-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 45%,
+                    rgba(168, 216, 229, 0.1) 50%,
+                    transparent 55%);
+            animation: scan 6s infinite linear;
+        }
+
+        /* Matrix Timeline */
+        .timeline-track {
+            position: relative;
+            margin: 4rem 0;
+            padding-left: 3rem;
+            border-left: 2px solid var(--quantum-blue);
+        }
+
+        .timeline-node {
+            position: relative;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(145deg,
+                    rgba(42, 111, 151, 0.2),
+                    rgba(42, 111, 151, 0.05));
+            border-radius: 8px;
+            transform: translateX(20px);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .timeline-node::before {
+            content: "";
+            position: absolute;
+            left: -3.4rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            background: var(--quantum-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--quantum-blue);
+        }
+
+        /* Skill Matrix */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(168, 216, 229, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg,
+                    var(--neon-wave),
+                    var(--cyber-teal));
+            width: 0;
+            transition: 1s;
+        }
+
+        /* Interactive elements */
+        .code-symbols {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+
+            100% {
+                transform: translate(50%, 50%) rotate(45deg);
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+
+        .profile-pic {
+            width: 326px;
+            height: 491px;
+            border-radius: 5%;
+            border: 3px solid var(--neon-wave);
+            box-shadow: 0 0 30px rgba(168, 216, 229, 0.3);
+        }
+
+
+
+        .social-link {
+            font-size: 2rem;
+            color: var(--hologram);
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--neon-wave);
+            transform: translateY(-3px);
+        }
+
+        .tech-logos-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-left: 3rem;
+            padding-right: 3rem;
+            padding: 1rem 1;
+        }
+
+        .tech-logo-group {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .right-group {
+            position: absolute;
+            margin-left: 47%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .tech-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 2rem;
+            margin: 0.2rem 0;
+        }
+
+        .tech-logo {
+            font-size: 3rem;
+            text-align: center;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .mini-tech-logo {
+            font-size: 1.2rem;
+            padding-left: 0.5rem;
+        }
+
+        .project-card {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: "View on GitHub";
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            opacity: 0;
+            transition: 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+            bottom: -20px;
+        }
+
+        .profile-container {
+            text-align: center;
+            padding-bottom: 0rem;
+            margin: 1rem 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+
+        .photo-social-links {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+
+
+        .holo-deck {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+        }
+
+        .project-card {
+            margin: 1rem;
+            padding: 2rem;
+        }
+
+        /* New media queries */
+        @media (max-width: 1200px) {
+            section {
+                padding: 6rem 10%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 5%;
+            }
+
+            .holo-deck {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-symbols-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .console-nav {
+            position: fixed;
+            z-index: 99999;
+            left: 1rem;
+            top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: rgba(1, 42, 74, 0.8);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--neon-wave);
+            box-shadow: 0 0 20px rgba(168, 216, 229, 0.1);
+            max-height: 235px;
+        }
+
+        .console-nav:not(.at-top):not(:hover) {
+            width: 20px;
+            opacity: 0.5;
+        }
+
+        .console-nav:not(.at-top):not(:hover) .nav-item {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Top of page state */
+        .console-nav.at-top {
+            opacity: 1;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--neon-wave);
+            text-shadow: 0 0 10px rgba(168, 216, 229, 0.3);
+        }
+
+        .nav-item.active::after {
+            content: "_";
+            animation: blink 1s infinite;
+            color: var(--neon-wave);
+            position: absolute;
+            right: -10px;
+        }
+
+
+        .timeline-node:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 30px rgba(168, 216, 229, 0.3) !important;
+        }
+
+        .nav-heading {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="cyber-grid"></div>
+    </div>
+    <div class="code-symbols-container" id="codeContainer"></div>
+
+    <nav class="console-nav at-top">
+        <div class="nav-item nav-heading">
+            # NAVIGATION
+        </div>
+        <div class="nav-item" data-section="about">
+            [james@neale~]$ whois james.neale
+        </div>
+        <div class="nav-item" data-section="skills">
+            [james@neale~]$ sudo apt-get skills
+        </div>
+        <div class="nav-item" data-section="experience">
+            [james@neale~]$ ./experience
+        </div>
+        <div class="nav-item" data-section="projects">
+            [james@neale~]$ git clone projects/
+        </div>
+        <div class="nav-item" data-section="education">
+            [james@neale~]$ ls education/
+        </div>
+    </nav>
+
+    <section id="about">
+        <div class="profile-container">
+            <img src="folded arms.jpg" alt="James" class="profile-pic">
+        </div>
+        <div class="photo-social-links">
+            <a href="https://naven-photography.webnode.co.uk/" target="_blank" class="social-link">
+                <i class="fa-solid fa-camera"></i>
+            </a>
+        </div>
+
+        <div class="console-header">
+            <p>[james@neale~]$ whois james.neale</p>
+            <h1 class="nav-heading">James Neale</h1>
+            <p class="nav-heading">[Updated: March 2025]</p>
+            <p class="typewriter">Diligent and persistent third-year Computer Science student at the University of
+                Pretoria. Passionate about computers and interested in sharing this knowledge. Proficient at
+                problem-solving and learning. Seeking to leverage these strengths to obtain bursaries and tutoring
+                positions, where I can upskill learning in IT and computer science.</p>
+        </div>
+
+        <div class="social-links">
+            <a href="https://github.com/James-178" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/james-neale-babbb626a/" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="YOUR_INSTAGRAM" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:jamesneale2004@gmail.com" class="social-link">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="console-header">
+            <p>[james@neale~]$ sudo apt-get skills</p>
+        </div>
+        <div class="skill-grid">
+            <div class="holo-card">
+                <h3>Languages</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 90%"></div>
+                </div>
+                <p>Java | JavaScript | Typescript | C++ | SQL | Python | HTML/CSS | PHP </p>
+            </div>
+            <div class="holo-card">
+                <h3>Databases</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 70%"></div>
+                </div>
+                <p>MySQL | MariaDB | MongoDB | phpMyAdmin | Postgresql</p>
+            </div>
+        </div>
+
+        <div class="tech-logos-container">
+            <div class="tech-logo-group left-group">
+                <i class="fab fa-java tech-logo"></i>
+                <i class="fab fa-js-square tech-logo"></i>
+                <i class="fab devicon-cplusplus-plain tech-logo"></i>
+                <i class="devicon-typescript-plain tech-logo"></i>
+                <i class="fab fa-python tech-logo"></i>
+                <i class="fab fa-html5 tech-logo"></i>
+                <i class="fab fa-css3-alt tech-logo"></i>
+                <i class="fab fa-php tech-logo"></i>
+            </div>
+
+            <div class="tech-logo-group right-group">
+                <i class="fab devicon-mysql-plain tech-logo"></i>
+                <i class="fab devicon-mongodb-plain tech-logo"></i>
+                <i class="fab devicon-php-plain tech-logo"></i>
+                <i class="fab devicon-postgresql-plain tech-logo"></i>
+            </div>
+        </div>
+
+        <div class="skill-grid">
+            <div class="holo-card">
+                <h3>Frameworks</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 20%"></div>
+                </div>
+                <p>Node.js | React</p>
+            </div>
+            <div class="holo-card">
+                <h3>DevOps</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 40%"></div>
+                </div>
+                <p>Git | GitHub | Docker | WSL </p>
+            </div>
+        </div>
+
+        <div class="tech-logos-container">
+            <div class="tech-logo-group left-group">
+                <i class="fab fa-node tech-logo"></i>
+                <i class="fab fa-react tech-logo"></i>
+            </div>
+
+            <div class="tech-logo-group right-group">
+                <i class="fab fa-git-alt tech-logo"></i>
+                <i class="fab fa-github tech-logo"></i>
+                <i class="fab fa-docker tech-logo"></i>
+                <i class="fab fa-linux tech-logo" title="C++"></i> <!-- For GitHub Actions -->
+            </div>
+        </div>
+
+    </section>
+
+    <section id="experience">
+        <div class="console-header">
+            <p>[james@neale~]$ ./experience</p>
+        </div>
+        <div class="timeline-track">
+            <div class="timeline-node">
+                <h3>Teaching Assistant</h3>
+                <p class="timeline-date"> Feb 2025 - June 2025</p>
+                <p>University of Pretoria | Pretoria, Gauteng</p>
+                <p>> Taught Data Structures and Algorithms (COS212)</p>
+                <p>> Taught Introduction to Database Systems (COS221)</p>
+            </div>
+            <div class="timeline-node">
+                <h3>Teaching Assistant</h3>
+                <p class="timeline-date"> July 2024 - Dec 2024</p>
+                <p>University of Pretoria | Pretoria, Gauteng</p>
+                <p>> Taught Program Design: Introduction (COS110)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="console-header">
+            <p>[james@neale~]$ git clone projects/</p>
+        </div>
+        <div class="holo-deck">
+            <div class="holo-card" data-github="https://github.com/COS301-SE-2025/Automated-Scheduling-System">
+                <h3>Automated Scheduling System</h3>
+                <p>> Rule based scheduling system for HR teams</p>
+                <p>> Group project. Lead developer: Frontend</p>
+                <p>> Owner: Discon Specialists</p>
+                <div class="tech-tags">
+                    <i class="devicon-typescript-plain mini-tech-logo"></i>
+                    <i class="fab fa-react mini-tech-logo"></i>
+                    <i class="devicon-tailwindcss-plain mini-tech-logo"></i>
+                    <i class="fab fa-golang mini-tech-logo"></i>
+                </div>
+            </div>
+            <div class="holo-card" data-github="">
+                <h3>NO-SQL Database(NOSquirreL)</h3>
+                <p>> Custom full-stack, document-based database</p>
+                <p>> Group project. Lead developer: CLI</p>
+                <p>> Owner: University of Pretoria (unfortunately, private on GitHub)</p>
+                <div class="tech-tags">
+                    <i class="fas fa-database mini-tech-logo"></i>
+                    <i class="fab fa-node mini-tech-logo"></i>
+                </div>
+            </div>
+            <div class="holo-card" data-github="https://github.com/James-178/Web-Terminal">
+                <h3>Web terminal</h3>
+                <p>> A customizable terminal interface for web applications that brings command-line functionality to your browser</p>
+                <p>> Solo project</p>
+                <div class="tech-tags">
+                    <i class="fab fa-js-square mini-tech-logo"></i>
+                    <i class="fab fa-css3-alt mini-tech-logo"></i>
+                    <i class="fab fa-html5 mini-tech-logo"></i>
+                </div>
+            </div>
+            <div class="holo-card" data-github="https://github.com/James-178/UP-timetable-web-app">
+                <h3>University Timetable Web-App</h3>
+                <p>> Web based application for UP timetable creation/management</p>
+                <p>> Solo project</p>
+                <div class="tech-tags">
+                    <i class="fab fa-js-square mini-tech-logo"></i>
+                    <i class="fab fa-css3-alt mini-tech-logo"></i>
+                    <i class="fab fa-html5 mini-tech-logo"></i>
+                </div>
+            </div>
+            <div class="holo-card" data-github="https://github.com/COS214-Project-2024/sudo-apt-get-marks">
+                <h3>City Builder CLI</h3>
+                <p>> Terminal-based city management game</p>
+                <p>> Group Project. Team leader</p>
+                <div class="tech-tags">
+                    <i class="fab devicon-cplusplus-plain mini-tech-logo"></i>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="console-header">
+            <p>[james@neale~]$ ls education/</p>
+        </div>
+        <div class="timeline-track">
+            <div class="timeline-node">
+                <h3>University Of Pretoria</h3>
+                <p class="timeline-date"> Jan 2023 - Current</p>
+                <p>Pretoria, Gauteng</p>
+                <p>Bachelor of Science: BSc Computer Science </p>
+            </div>
+            <div class="timeline-node">
+                <h3>Northcliff High School</h3>
+                <p class="timeline-date"> Jan 2018 - Dec 2022</p>
+                <p>Johannesburg, Gauteng</p>
+                <p>National Senior Certificate: Bachelor's Degree</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+
+        function createCyberGrid() {
+            const container = document.querySelector('.background-container');
+            const contentHeight = document.documentElement.scrollHeight;
+            container.style.height = `${contentHeight}px`;
+            for (let i = 0; i < 80; i++) {
+                const chip = document.createElement('div');
+                chip.className = 'floating-chip';
+                chip.style.left = `${Math.random() * 100}%`;
+                chip.style.top = `${Math.random() * contentHeight}px`;
+                chip.style.width = `${Math.random() * 100 + 50}px`;
+                chip.style.height = `${Math.random() * 30 + 10}px`;
+                chip.style.animationDelay = `${Math.random() * 10}s`;
+
+                chip.addEventListener('mouseenter', () => {
+                    chip.style.opacity = '0.8';
+                    chip.style.boxShadow = '0 0 15px var(--neon-wave)';
+                });
+
+                chip.addEventListener('mouseleave', () => {
+                    chip.style.opacity = '0.3';
+                    chip.style.boxShadow = 'none';
+                });
+
+                container.appendChild(chip);
+            }
+        }
+        window.addEventListener('resize', () => {
+            const container = document.querySelector('.background-container');
+            container.style.height = `${document.documentElement.scrollHeight}px`;
+        });
+        createCyberGrid();
+
+        const codeContainer = document.getElementById('codeContainer');
+        let lastSymbol = null;
+
+        document.addEventListener('mousemove', (e) => {
+            const symbols = ['</>', '#', '{}', '=>', '()', ';'];
+            const symbol = document.createElement('div');
+            symbol.className = 'code-symbols';
+            symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+            symbol.style.left = `${e.clientX + 5}px`;
+            symbol.style.top = `${e.clientY + 5}px`;
+
+            document.getElementById('codeContainer').appendChild(symbol);
+
+            setTimeout(() => symbol.remove(), 1000);
+        });
+
+        document.addEventListener('mouseleave', () => {
+            codeContainer.innerHTML = '';
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+
+                this.classList.add('active');
+
+                const targetId = this.dataset.section;
+                const targetSection = document.getElementById(targetId);
+
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                setTimeout(() => {
+                    this.classList.remove('active');
+                }, 1000);
+            });
+        });
+
+        // Animate elements on scroll
+        const combinedObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Handle section animations
+                    if (entry.target.classList.contains('timeline-node') ||
+                        entry.target.classList.contains('holo-card')) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateX(0)';
+                        if (entry.target.querySelector('.skill-progress')) {
+                            entry.target.querySelector('.skill-progress').style.width =
+                                entry.target.querySelector('.skill-progress').dataset.width;
+                        }
+                    }
+
+                    // Handle navigation highlighting
+                    if (entry.target.tagName === 'SECTION') {
+                        const id = entry.target.getAttribute('id');
+                        document.querySelectorAll('.nav-item').forEach(item => {
+                            item.classList.remove('active');
+                            if (item.dataset.section === id) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('section, .timeline-node, .holo-card').forEach(el => {
+            combinedObserver.observe(el);
+        });
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                window.open(card.dataset.github, '_blank');
+            });
+        });
+
+        document.querySelectorAll('.tech-logo').forEach(logo => {
+            logo.addEventListener('mouseover', () => {
+                logo.style.transform = 'translateY(-5px) scale(1.2)';
+                logo.style.color = getComputedStyle(document.documentElement)
+                    .getPropertyValue('--neon-wave');
+            });
+
+            logo.addEventListener('mouseout', () => {
+                logo.style.transform = 'none';
+                logo.style.color = '';
+            });
+        });
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                window.open(card.dataset.github, '_blank');
+            });
+        });
+
+        let isAtTop = true;
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.console-nav');
+            isAtTop = window.scrollY === 0;
+
+            if (isAtTop) {
+                nav.classList.add('at-top');
+            } else {
+                nav.classList.remove('at-top');
+            }
+        });
+
+        document.querySelectorAll('.holo-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', (e) => {
+                const repoUrl = card.dataset.github;
+                if (repoUrl && repoUrl !== '#') {
+                    window.open(repoUrl, '_blank');
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
