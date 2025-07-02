@@ -27,9 +27,7 @@
             color: var(--hologram);
             overflow-x: hidden;
             background: transparent;
-            /* Remove solid background */
             position: relative;
-            /* Establish stacking context */
         }
 
         body::before {
@@ -41,7 +39,6 @@
             height: 100%;
             background: var(--deep-space);
             z-index: -3;
-            /* Behind other elements */
         }
 
         .background-container {
@@ -54,7 +51,6 @@
             z-index: 0;
         }
 
-        /* Cybernetic Background */
         .cyber-grid {
             position: absolute;
             width: 100%;
@@ -63,15 +59,12 @@
             background:
                 radial-gradient(circle at 50% 50%,
                     rgba(168, 216, 229, 0.15) 1px,
-                    /* Brighter dots */
                     transparent 2px
-                    /* Larger spacing */
                 ),
                 linear-gradient(45deg, transparent 85%, rgba(168, 216, 229, 0.1) 95%),
                 linear-gradient(-45deg, transparent 85%, rgba(168, 216, 229, 0.1) 95%);
             background-size:
                 60px 60px,
-                /* Larger grid spacing */
                 20px 20px,
                 20px 20px;
             pointer-events: none;
@@ -129,11 +122,9 @@
             z-index: 1;
         }
 
-        /* Terminal-inspired Header */
         .console-header {
             border-left: 3px solid var(--neon-wave);
             padding-left: 3rem;
-            /* margin: 5rem 0; */
             position: relative;
         }
 
@@ -145,7 +136,6 @@
             animation: blink 1s infinite;
         }
 
-        /* Holographic Card */
         .holo-card {
             background: rgba(168, 216, 229, 0.08);
             border: 1px solid rgba(168, 216, 229, 0.2);
@@ -175,7 +165,6 @@
             animation: scan 6s infinite linear;
         }
 
-        /* Matrix Timeline */
         .timeline-track {
             position: relative;
             margin: 4rem 0;
@@ -209,7 +198,6 @@
             box-shadow: 0 0 10px var(--quantum-blue);
         }
 
-        /* Skill Matrix */
         .skill-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -233,7 +221,6 @@
             transition: 1s;
         }
 
-        /* Interactive elements */
         .code-symbols {
             position: absolute;
             font-size: 1.2rem;
@@ -389,7 +376,6 @@
             padding: 2rem;
         }
 
-        /* New media queries */
         @media (max-width: 1200px) {
             section {
                 padding: 6rem 10%;
@@ -440,7 +426,6 @@
             pointer-events: none;
         }
 
-        /* Top of page state */
         .console-nav.at-top {
             opacity: 1;
         }
@@ -607,7 +592,7 @@
                 <i class="fab fa-git-alt tech-logo"></i>
                 <i class="fab fa-github tech-logo"></i>
                 <i class="fab fa-docker tech-logo"></i>
-                <i class="fab fa-linux tech-logo" title="C++"></i> <!-- For GitHub Actions -->
+                <i class="fab fa-linux tech-logo" title="C++"></i>
             </div>
         </div>
 
@@ -791,11 +776,9 @@
             });
         });
 
-        // Animate elements on scroll
         const combinedObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Handle section animations
                     if (entry.target.classList.contains('timeline-node') ||
                         entry.target.classList.contains('holo-card')) {
                         entry.target.style.opacity = 1;
@@ -806,7 +789,6 @@
                         }
                     }
 
-                    // Handle navigation highlighting
                     if (entry.target.tagName === 'SECTION') {
                         const id = entry.target.getAttribute('id');
                         document.querySelectorAll('.nav-item').forEach(item => {
